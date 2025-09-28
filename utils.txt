@@ -1,0 +1,28 @@
+Système de publication 
+RabbitMq:Traitement de message légers pour les applications distribuées
+Objectif: 
+Vérifier que le texte ne contient pas de XSS (scripts HTML injectés).
+
+Échapper ou supprimer les tags interdits (<script>, <iframe>).
+Vérifier le MIME type (éviter un .exe déguisé en .png).
+
+Vérifier la taille (limiter à 5–10 Mo).
+
+
+Commentaire: 
+-associé à une publication 
+-correspond à un utilisateur (auteur)
+-date d'enregistrement du commentaire, date de modification(si)
+-photos + texte 
+-photos seul 
+-texte seul 
+
+
+publication: 
+-photos ou texte
+-photos uniquement 
+-texte uniquement
+-date d'enregistrement 
+-date de modification
+-nombre de like 
+-nombre de dislike
