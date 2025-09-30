@@ -32,36 +32,36 @@ export class AuthentificationService {
     }
 
     //signin méthode 
-     async signin(signInDto: SignInDto): Promise<{ access_token: string, message: string, User: any }> {
-    const { login, password } = signInDto;
+    async signin(signInDto: SignInDto): Promise<{ access_token: string, message: string, User: any }> {
+      const { login, password } = signInDto;
 
-    // Recherche du login dans la base de données
-    const user = await this.administrateurRepository.findOne({ where: { login } });
+      // Recherche du login dans la base de données
+      const user = await this.administrateurRepository.findOne({ where: { login } });
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid login or password');
-    }
+      if (!user) {
+        throw new UnauthorizedException('Invalid login or password');
+      }
 
-    // Vérification du mot de passe
-    const passwordValid = await bcrypt.compare(password, user.password);
-    if (!passwordValid) {
-      throw new UnauthorizedException('Invalid login or password');
-    }
+      // Vérification du mot de passe
+      const passwordValid = await bcrypt.compare(password, user.password);
+      if (!passwordValid) {
+        throw new UnauthorizedException('Invalid login or password');
+      }
 
-    const payload = {
-      sub: user.id,
-      admin: user.admin,};
-    
-    // Générer le token d'accès
-    const access_token = await this.jwtService.signAsync(payload);
+      const payload = {
+        sub: user.id,
+        admin: user.admin,};
+      
+      // Générer le token d'accès
+      const access_token = await this.jwtService.signAsync(payload);
 
-    return {
-      access_token,
-      message: "Connexion réussie",
-      User: {
-        admin: user.admin,
-      },
-    };
+      return {
+        access_token,
+        message: "Connexion réussie",
+        User: {
+          admin: user.admin,
+        },
+      };
   }
 
     //hasher le mots de passe

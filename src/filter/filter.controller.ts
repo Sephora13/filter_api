@@ -1,4 +1,4 @@
-import { Controller, Get, Body } from '@nestjs/common';
+import { Controller, Get, Body, HttpStatus, HttpException } from '@nestjs/common';
 import { FilterService } from './filter.service';
 
 @Controller('filter')
@@ -9,6 +9,17 @@ export class FilterController {
 
   @Get('')
     async filter(@Body() FilterDto){
-      return this.filterService.filter(FilterDto);
+      const filtre=  await this.filterService.filter(FilterDto);
+      try{
+        return {
+          status:HttpStatus.ACCEPTED,
+          filtre
+        }
+      } catch(error){
+        return{
+          status: HttpException
+        }
+      }
+      
     }
 }
